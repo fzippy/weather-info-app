@@ -8,7 +8,7 @@ function App() {
     <div className="container">
       <SearchBar />
       <div className="cardContainer">
-        <Card></Card>
+        <Card country="Pakistan"></Card>
       </div>
     </div>
   );
