@@ -2,25 +2,44 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function Card(props) {
-    const [data, setData] = useState([]);
-    const [weather, setWeather] = useState([]);
+
+  const [coordinates, getcoordinates] = useState([]);
+  const [data, setData] = useState([]);
+  const [weather, setWeather] = useState([]);
   
-    useEffect(() => {
-      const fetchData = async () => {
-        const result = await axios.get(
-          `https://restcountries.com/v2/name/${props.country}`,
+
+      const fetchCountryData = async ()=>{
+        const latAndLong = await axios.get(
+          `http://api.openweathermap.org/geo/1.0/direct?q=${props.country}&appid=3001171d64b6cd2480ec2312c708d488`
         )
-        
-
-        // console.log(result.data[0])
+        getcoordinates([latAndLong.data[0].lat, latAndLong.data[0].lon])
+        fetchData(latAndLong.data[0].country)
+      }
+      const fetchData = async (country) => {
+        const result = await axios.get(
+          `https://restcountries.com/v2/name/${country}`,
+        )
+        // console.log(latAndLong.data[0].lat)
         setData(result.data[0]);
-  
-      };
-  
-      fetchData();
 
-    },[])
-    // console.log(data)
+      };
+      fetchData(latAndLong.data[0].country);
+  
+      // fetchData(coordinates[2]);
+
+
+
+    useEffect(() => {
+      console.log("MOUNTED")
+      fetchCountryData();
+      
+
+    }, [])
+    useEffect(() => {
+      console.log(coordinates,"UPDATED MOUNTED")
+      // fetchCountryData();
+    }, [coordinates])
+    console.log(coordinates)
     return (
         
         <div className="card">
