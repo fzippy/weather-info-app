@@ -3,7 +3,6 @@ import axios from 'axios';
 
 function Card(props) {
 
-  const [coordinates, getcoordinates] = useState([]);
   const [data, setData] = useState([]);
   const [weather, setWeather] = useState([]);
   
@@ -12,8 +11,10 @@ function Card(props) {
         const latAndLong = await axios.get(
           `http://api.openweathermap.org/geo/1.0/direct?q=${props.country}&appid=3001171d64b6cd2480ec2312c708d488`
         )
-        getcoordinates([latAndLong.data[0].lat, latAndLong.data[0].lon])
+        // getcoordinates([])
         fetchData(latAndLong.data[0].country)
+        fetchWeather(latAndLong.data[0].lat, latAndLong.data[0].lon)
+        
       }
       const fetchData = async (country) => {
         const result = await axios.get(
@@ -23,8 +24,10 @@ function Card(props) {
         setData(result.data[0]);
 
       };
-      fetchData(latAndLong.data[0].country);
-  
+      const fetchWeather = async(lat, lon)=>{
+        const getWeather = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=3001171d64b6cd2480ec2312c708d488`)
+        setWeather(getWeather.data)
+      }
       // fetchData(coordinates[2]);
 
 
@@ -35,11 +38,10 @@ function Card(props) {
       
 
     }, [])
-    useEffect(() => {
-      console.log(coordinates,"UPDATED MOUNTED")
-      // fetchCountryData();
-    }, [coordinates])
-    console.log(coordinates)
+    // const metricWeather = function(){
+    //   return weather - 
+    // }
+    console.log() 
     return (
         
         <div className="card">
@@ -48,8 +50,8 @@ function Card(props) {
 
           </div>
           <p className="cardCountry"> <strong>Name:</strong> {data.name}</p>
-          <p className="cardCountry"> <strong>Popultation:</strong> {data.population}</p>
-          <p className="cardCountry"> <strong>Weather:</strong> 69</p>
+          <p className="cardCountry"> <strong>Population:</strong> {data.population}</p>
+          <p className="cardCountry"> <strong>Weather:</strong> {weather.main?.temp - 273.15} °C</p>
           <div className="row" style={{margin:'10px 0'}}>
             <p> <strong>More infomation about</strong> {data.name}</p>
             <div className="downArrow">↓</div>
