@@ -17,6 +17,16 @@ function App() {
 
   return (
     <div className="container">
+      <p
+        style={{
+          textAlign: "center",
+          fontSize: "40px",
+          fontWeight: "bold",
+          padding: "20px 0",
+        }}
+      >
+        My Weather{" "}
+      </p>
       <SearchBar onLicks={getData} />
       <div className="cardContainer">
         {dataArray}
