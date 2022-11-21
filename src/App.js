@@ -28,10 +28,7 @@ function App() {
         My Weather{" "}
       </p>
       <SearchBar onLicks={getData} />
-      <div className="cardContainer">
-        {dataArray}
-        {/* <Card country="United Kingdom"></Card> */}
-      </div>
+      <div className="cardContainer">{dataArray}</div>
     </div>
   );
 }
