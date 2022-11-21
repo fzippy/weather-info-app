@@ -41,6 +41,7 @@
   width: 80%;
   margin: 0 auto;
   padding: 20px ;
+  justify-content: center;
 }
 .card{
   border-radius: 6px;
